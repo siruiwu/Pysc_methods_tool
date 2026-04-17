@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Method Compass | Find the right quantitative method</title>
+    <meta
+      name="description"
+      content="A beginner-friendly static website prototype for psychology and social science students to narrow down a research question and find suitable quantitative methods."
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#top">
+          <span class="brand-mark">MC</span>
+          <span>
+            <strong>Method Compass</strong>
+            <small>Research question first</small>
+          </span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="site-nav">
+          <a href="#finder">Method Finder</a>
+          <a href="#library">Method Library</a>
+          <a href="#compare">Compare</a>
+          <a href="#scenarios">Scenarios</a>
+          <a href="#resources">Resources</a>
+          <a href="#about">About</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">For psychology and social science students</p>
+            <h1>Not sure which quantitative method fits your study?</h1>
+            <p class="hero-text">
+              Start with your research question, not with statistical jargon. This site helps
+              students move from broad project ideas to likely quantitative methods in a calm,
+              structured, beginner-friendly way.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#finder">Find a Method</a>
+              <a class="button button-secondary" href="#library">Browse Methods</a>
+              <a class="button button-ghost" href="#compare">Compare Similar Methods</a>
+            </div>
+          </div>
+          <aside class="hero-panel">
+            <p class="panel-label">What this site helps with</p>
+            <ul class="check-list">
+              <li>Move from a question to a likely method</li>
+              <li>Recognize variable types and study structure</li>
+              <li>Learn why one method fits better than another</li>
+              <li>Spot common beginner mistakes early</li>
+            </ul>
+            <div class="hero-mini-card">
+              <span class="mini-step">3 steps</span>
+              <strong>Question -> Variables -> Method</strong>
+              <p>Most students should be able to get a shortlist in under five minutes.</p>
+            </div>
+          </aside>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Start here</p>
+            <h2>Choose an entry point that matches your thinking</h2>
+          </div>
+          <div class="card-grid card-grid-3">
+            <a class="feature-card" href="#finder" data-prefill-goal="compare-groups">
+              <p class="card-kicker">Entry path</p>
+              <h3>Compare groups</h3>
+              <p>For differences between conditions, groups, or time points.</p>
+            </a>
+            <a class="feature-card" href="#finder" data-prefill-goal="relationship">
+              <p class="card-kicker">Entry path</p>
+              <h3>Study relationships or prediction</h3>
+              <p>For questions about association, explanation, or prediction.</p>
+            </a>
+            <a class="feature-card" href="#finder" data-prefill-goal="unsure">
+              <p class="card-kicker">Entry path</p>
+              <h3>Not sure where to start</h3>
+              <p>Use guided questions to identify the structure of your project.</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <p class="eyebrow">How it works</p>
+            <h2>A short, low-stress decision process</h2>
+          </div>
+          <div class="steps">
+            <article class="step-card">
+              <span class="step-number">01</span>
+              <h3>Define the question</h3>
+              <p>Start with what you want to know: differences, relationships, prediction, or change.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">02</span>
+              <h3>Identify the variables</h3>
+              <p>We help you think about outcome type, groups, and repeated measurements.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">03</span>
+              <h3>Review likely methods</h3>
+              <p>Get a shortlist with plain-language reasons, check-points, and common confusions.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section alt-section">
+          <div class="section-heading">
+            <p class="eyebrow">Common beginner confusion</p>
+            <h2>Featured topics worth learning early</h2>
+          </div>
+          <div class="topic-grid" data-featured-comparisons></div>
+        </section>
+
+        <section class="section case-study">
+          <div class="case-copy">
+            <p class="eyebrow">Featured case study</p>
+            <h2>Does social support predict student anxiety?</h2>
+            <p>
+              This example shows how a broad student research idea becomes measurable variables, a
+              clearer design, and a more justified method choice.
+            </p>
+            <ul class="plain-list">
+              <li>How a broad topic becomes a measurable question</li>
+              <li>How variables are identified and categorized</li>
+              <li>Why correlation and regression are both considered</li>
+              <li>What to check before running an analysis</li>
+            </ul>
+          </div>
+          <div class="case-panel">
+            <div class="case-chip">Question</div>
+            <p>Do students with stronger social support report lower anxiety?</p>
+            <div class="case-chip">Likely structure</div>
+            <p>Cross-sectional design with two continuous variables.</p>
+            <div class="case-chip">Methods to compare</div>
+            <p>Correlation for association, regression for prediction.</p>
+          </div>
+        </section>
+
+        <section class="section finder-section" id="finder">
+          <div class="section-heading">
+            <p class="eyebrow">Main interactive tool</p>
+            <h2>Method Finder</h2>
+          </div>
+          <div class="finder-layout">
+            <aside class="finder-sidebar">
+              <h3>What the tool asks about</h3>
+              <ul class="plain-list">
+                <li>Your main research goal</li>
+                <li>What kind of outcome you have</li>
+                <li>Whether you have groups, repeated measures, or predictors</li>
+                <li>What design structure sounds closest</li>
+              </ul>
+              <div class="progress-box">
+                <p class="progress-label">Progress</p>
+                <div class="progress-track"><span data-progress-bar></span></div>
+                <p data-progress-text>Step 1 of 4</p>
+              </div>
+            </aside>
+            <div class="finder-main">
+              <form class="finder-card" data-finder-form>
+                <div data-finder-step></div>
+                <div class="finder-actions">
+                  <button class="button button-ghost" type="button" data-finder-back disabled>Back</button>
+                  <button class="button button-primary" type="button" data-finder-next>Next</button>
+                </div>
+              </form>
+              <section class="results-panel hidden" data-finder-results>
+                <div class="section-heading">
+                  <p class="eyebrow">Suggested methods</p>
+                  <h3>Your shortlist</h3>
+                </div>
+                <p class="support-copy">
+                  These suggestions are educational starting points, not final professional statistical advice.
+                </p>
+                <div data-finder-results-list></div>
+                <div class="results-footer">
+                  <a class="button button-secondary" href="#library">Browse the Method Library</a>
+                  <button class="button button-ghost" type="button" data-finder-reset>Start over</button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="library">
+          <div class="section-heading">
+            <p class="eyebrow">Content hub</p>
+            <h2>Method Library</h2>
+          </div>
+          <p class="section-intro">
+            Browse methods by goal and difficulty. This MVP uses structured cards now, and can grow
+            into fuller individual method pages later.
+          </p>
+          <div class="toolbar">
+            <label class="search-input">
+              <span>Search methods</span>
+              <input type="search" placeholder="Try: compare groups, pre-post, prediction" data-method-search />
+            </label>
+            <label class="filter-input">
+              <span>Filter by goal</span>
+              <select data-method-goal>
+                <option value="all">All goals</option>
+              </select>
+            </label>
+          </div>
+          <div class="card-grid" data-method-grid></div>
+        </section>
+
+        <section class="section" id="compare">
+          <div class="section-heading">
+            <p class="eyebrow">Distinguish similar options</p>
+            <h2>Compare Methods</h2>
+          </div>
+          <div class="card-grid" data-comparison-grid></div>
+        </section>
+
+        <section class="section" id="scenarios">
+          <div class="section-heading">
+            <p class="eyebrow">Project-first learning</p>
+            <h2>Research Scenarios</h2>
+          </div>
+          <div class="card-grid" data-scenario-grid></div>
+        </section>
+
+        <section class="section" id="paths">
+          <div class="section-heading">
+            <p class="eyebrow">Structured learning</p>
+            <h2>Learning Paths</h2>
+          </div>
+          <div class="card-grid" data-path-grid></div>
+        </section>
+
+        <section class="section" id="resources">
+          <div class="section-heading">
+            <p class="eyebrow">Foundation first</p>
+            <h2>Resources</h2>
+          </div>
+          <div class="card-grid" data-resource-grid></div>
+        </section>
+
+        <section class="section prose-section" id="about">
+          <div class="section-heading">
+            <p class="eyebrow">About the project</p>
+            <h2>Why this site exists</h2>
+          </div>
+          <div class="content-card">
+            <p>
+              Many students do not struggle because they have never heard of t-tests, ANOVA, or
+              regression. They struggle because they do not know how to move from a research
+              question to a method that fits their study.
+            </p>
+            <p>
+              Method Compass is designed as a calm, supportive educational website for psychology
+              and social science students. It teaches method choice through guided structure,
+              realistic examples, and direct attention to common confusions.
+            </p>
+            <p>
+              This is not meant to be a full statistics encyclopedia or a software tutorial site.
+              Its job is to help beginners know where to start, what options make sense, and what to
+              learn next.
+            </p>
+          </div>
+        </section>
+
+        <section class="section prose-section" id="faq">
+          <div class="section-heading">
+            <p class="eyebrow">Questions students often ask</p>
+            <h2>FAQ</h2>
+          </div>
+          <div class="faq-list">
+            <article class="faq-item">
+              <h3>Is this site for beginners?</h3>
+              <p>Yes. The language stays plain and the flow is designed to reduce overwhelm.</p>
+            </article>
+            <article class="faq-item">
+              <h3>Does this replace a statistics course?</h3>
+              <p>No. It helps you narrow likely methods and understand the reasoning behind them.</p>
+            </article>
+            <article class="faq-item">
+              <h3>Can this tell me exactly what method to use?</h3>
+              <p>Not with complete certainty. It gives structured educational guidance and shows what to check next.</p>
+            </article>
+            <article class="faq-item">
+              <h3>What if I still feel unsure?</h3>
+              <p>Use the Resources section, compare nearby methods, and treat the shortlist as a starting point for discussion with an instructor.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div>
+          <strong>Method Compass</strong>
+          <p>A static MVP for helping students feel less overwhelmed by quantitative method choice.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#finder">Method Finder</a>
+          <a href="#library">Method Library</a>
+          <a href="#paths">Learning Paths</a>
+          <a href="#about">About</a>
+        </div>
+      </footer>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/site.js"></script>
+  </body>
+</html>

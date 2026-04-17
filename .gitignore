@@ -1,0 +1,5 @@
+*.docx
+*.pptx
+
+# Keep the repo focused on the website code for now.
+data/
