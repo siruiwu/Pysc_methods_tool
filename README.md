@@ -1,7 +1,5 @@
 # Method Compass MVP
 
-This folder now includes a working static website prototype based on the project brief in the Word and PowerPoint source materials.
-
 ## Files
 
 - `index.html` - the single-page MVP site
@@ -12,8 +10,6 @@ This folder now includes a working static website prototype based on the project
 ## How to view it
 
 Open `index.html` in a browser.
-
-The site is intentionally built without a framework or build step, so it can run locally as a plain static website.
 
 ## Current scope
 
