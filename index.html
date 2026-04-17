@@ -25,6 +25,7 @@
           <span></span>
         </button>
         <nav class="site-nav">
+          <a href="#clarify">Question Clarifier</a>
           <a href="#finder">Method Finder</a>
           <a href="#library">Method Library</a>
           <a href="#compare">Compare</a>
@@ -46,23 +47,23 @@
               structured, beginner-friendly way.
             </p>
             <div class="hero-actions">
-              <a class="button button-primary" href="#finder">Find a Method</a>
-              <a class="button button-secondary" href="#library">Browse Methods</a>
+              <a class="button button-primary" href="#clarify">Clarify My Question</a>
+              <a class="button button-secondary" href="#finder">Find a Method</a>
               <a class="button button-ghost" href="#compare">Compare Similar Methods</a>
             </div>
           </div>
           <aside class="hero-panel">
             <p class="panel-label">What this site helps with</p>
             <ul class="check-list">
+              <li>Start from a narrative research question</li>
               <li>Move from a question to a likely method</li>
               <li>Recognize variable types and study structure</li>
               <li>Learn why one method fits better than another</li>
-              <li>Spot common beginner mistakes early</li>
             </ul>
             <div class="hero-mini-card">
-              <span class="mini-step">3 steps</span>
-              <strong>Question -> Variables -> Method</strong>
-              <p>Most students should be able to get a shortlist in under five minutes.</p>
+              <span class="mini-step">New first step</span>
+              <strong>Narrative question -> study map -> method</strong>
+              <p>Students can begin with the words they already have, even if the variables are still fuzzy.</p>
             </div>
           </aside>
         </section>
@@ -99,13 +100,13 @@
           <div class="steps">
             <article class="step-card">
               <span class="step-number">01</span>
-              <h3>Define the question</h3>
-              <p>Start with what you want to know: differences, relationships, prediction, or change.</p>
+              <h3>Paste the question you already have</h3>
+              <p>Start with a narrative research question, even if it still feels broad or imprecise.</p>
             </article>
             <article class="step-card">
               <span class="step-number">02</span>
-              <h3>Identify the variables</h3>
-              <p>We help you think about outcome type, groups, and repeated measurements.</p>
+              <h3>Clarify the study structure</h3>
+              <p>We help you identify the likely goal, variables, groups, and what still needs to be specified.</p>
             </article>
             <article class="step-card">
               <span class="step-number">03</span>
@@ -148,11 +149,81 @@
           </div>
         </section>
 
+        <section class="section" id="clarify">
+          <div class="section-heading">
+            <p class="eyebrow">New core differentiator</p>
+            <h2>Question Clarifier</h2>
+          </div>
+          <p class="section-intro">
+            Instead of asking students to start from method names, this tool starts from a narrative
+            research question and helps translate it into a more workable study plan.
+          </p>
+          <div class="clarifier-layout">
+            <aside class="clarifier-sidebar">
+              <h3>What it does</h3>
+              <ul class="plain-list">
+                <li>Identifies the likely question family</li>
+                <li>Suggests what your outcome may be</li>
+                <li>Flags missing pieces you still need to define</li>
+                <li>Rewrites the question into a more analysis-ready version</li>
+              </ul>
+              <div class="progress-box">
+                <p class="progress-label">Good starting prompt</p>
+                <p class="sidebar-note">Example: “Does social support affect anxiety among first-year university students?”</p>
+              </div>
+            </aside>
+            <div class="clarifier-main">
+              <div class="finder-card">
+                <label class="clarifier-label" for="research-question-input">Paste a narrative research question</label>
+                <textarea
+                  id="research-question-input"
+                  class="clarifier-input"
+                  rows="5"
+                  placeholder="Example: I want to know whether students with more social support report lower anxiety, and whether this differs between first-year and senior students."
+                  data-question-input
+                ></textarea>
+                <div class="hero-actions">
+                  <button class="button button-primary" type="button" data-question-analyze>Clarify this question</button>
+                  <button class="button button-ghost" type="button" data-question-example>Use an example</button>
+                </div>
+              </div>
+              <section class="results-panel hidden" data-question-results>
+                <div class="section-heading">
+                  <p class="eyebrow">Clarified question map</p>
+                  <h3>What this question seems to be asking</h3>
+                </div>
+                <div class="clarifier-summary" data-question-summary></div>
+                <div class="clarifier-grid">
+                  <article class="result-card">
+                    <p class="card-kicker">Likely study shape</p>
+                    <div data-question-shape></div>
+                  </article>
+                  <article class="result-card">
+                    <p class="card-kicker">What still needs clarification</p>
+                    <div data-question-gaps></div>
+                  </article>
+                </div>
+                <article class="result-card">
+                  <p class="card-kicker">Rewrite starter</p>
+                  <div data-question-rewrite></div>
+                </article>
+                <div class="results-footer">
+                  <button class="button button-secondary" type="button" data-question-to-finder>Use this in Method Finder</button>
+                  <a class="button button-ghost" href="#resources">Review foundations first</a>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
         <section class="section finder-section" id="finder">
           <div class="section-heading">
-            <p class="eyebrow">Main interactive tool</p>
+            <p class="eyebrow">Step two</p>
             <h2>Method Finder</h2>
           </div>
+          <p class="section-intro">
+            Once the question feels more specific, use the Method Finder to narrow down likely analyses.
+          </p>
           <div class="finder-layout">
             <aside class="finder-sidebar">
               <h3>What the tool asks about</h3>
@@ -306,6 +377,7 @@
           <p>A static MVP for helping students feel less overwhelmed by quantitative method choice.</p>
         </div>
         <div class="footer-links">
+          <a href="#clarify">Question Clarifier</a>
           <a href="#finder">Method Finder</a>
           <a href="#library">Method Library</a>
           <a href="#paths">Learning Paths</a>

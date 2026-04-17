@@ -209,6 +209,41 @@ window.siteData = {
       summary: "A plain-language introduction to the checks beginners should know before using a method."
     }
   ],
+  clarifier: {
+    examples: [
+      "I want to know whether students with more social support report lower anxiety, and whether this differs between first-year and senior students.",
+      "Do students who attend a mindfulness workshop show lower stress after the program than before it starts?",
+      "Is sleep quality related to academic performance among undergraduate psychology students?"
+    ],
+    goalKeywords: {
+      "compare-groups": ["difference", "differences", "compare", "comparison", "versus", "vs", "higher than", "lower than", "across groups", "between groups"],
+      relationship: ["relationship", "related", "association", "associated", "correlat", "link", "linked", "connected"],
+      predict: ["predict", "prediction", "predictor", "explain", "explains", "influence", "impact", "likelihood", "odds", "account for"],
+      describe: ["describe", "frequency", "prevalence", "rate", "how common", "what proportion"]
+    },
+    structureKeywords: {
+      "same-participants-twice": ["before and after", "pre post", "pre-post", "over time", "same participants", "same students", "measured twice", "time 1", "time 2"],
+      "two-independent-groups": ["between", "compared with", "compared to", "treatment and control", "two groups", "first-year and senior", "men and women"],
+      "three-plus-groups": ["three groups", "several groups", "across majors", "across conditions", "different groups"],
+      "two-continuous-variables": ["relationship between", "related to", "association between", "correlation between"],
+      "predictors-to-outcome": ["predict", "explains", "influence", "effect of"],
+      "predictors-to-categorical-outcome": ["likelihood", "odds", "whether students", "yes or no", "binary"],
+      "two-categorical-variables": ["proportion", "category", "categories", "group by", "yes or no across groups"]
+    },
+    outcomeHints: {
+      continuous: ["score", "anxiety", "stress", "depression", "support", "performance", "grade", "sleep", "motivation", "attitude"],
+      binary: ["whether", "did", "yes or no", "pass", "fail", "attend", "drop out", "sought help"],
+      categorical: ["major", "gender", "category", "type", "group"],
+      count: ["number of", "count", "times", "visits", "events"]
+    },
+    rewriteTemplates: {
+      "compare-groups": "Among [population], do [group or condition A] and [group or condition B] differ on [measurable outcome]?",
+      relationship: "Among [population], is [variable X] associated with [variable Y]?",
+      predict: "Among [population], does [predictor or predictors] predict [measurable outcome]?",
+      describe: "Among [population], what is the level, frequency, or distribution of [measurable variable]?",
+      unsure: "Among [population], what is the relationship between [key variable or group] and [measurable outcome]?"
+    }
+  },
   questions: [
     {
       key: "goal",

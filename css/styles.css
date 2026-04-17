@@ -400,6 +400,59 @@ h3 {
   gap: 1.4rem;
 }
 
+.clarifier-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  gap: 1.4rem;
+}
+
+.clarifier-sidebar {
+  padding: 1.5rem;
+  border: 1px solid rgba(24, 50, 49, 0.12);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(255, 251, 244, 0.92), rgba(243, 235, 223, 0.82));
+  box-shadow: var(--shadow);
+}
+
+.clarifier-main {
+  display: grid;
+  gap: 1rem;
+}
+
+.clarifier-label {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-weight: 700;
+}
+
+.clarifier-input {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 253, 248, 0.96);
+  color: var(--text);
+}
+
+.clarifier-summary {
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-md);
+  background: rgba(43, 122, 119, 0.1);
+}
+
+.clarifier-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.sidebar-note {
+  margin: 0;
+  color: var(--text-soft);
+}
+
 .progress-track {
   width: 100%;
   height: 10px;
@@ -511,9 +564,11 @@ select {
 @media (max-width: 960px) {
   .hero,
   .finder-layout,
+  .clarifier-layout,
   .steps,
   .case-study,
-  .card-grid-3 {
+  .card-grid-3,
+  .clarifier-grid {
     grid-template-columns: 1fr;
   }
 

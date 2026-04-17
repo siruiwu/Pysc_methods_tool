@@ -14,6 +14,7 @@ Open `index.html` in a browser.
 ## Current scope
 
 - Homepage and project positioning
+- Narrative Question Clarifier that starts from a student-written research question
 - Guided Method Finder
 - Method Library cards with search and filtering
 - Compare Methods, Research Scenarios, Learning Paths, and Resources sections
@@ -22,6 +23,7 @@ Open `index.html` in a browser.
 ## Next good steps
 
 1. Expand the starter cards into fuller page-level content.
-2. Add more methods, especially mediation and moderation content.
-3. Refine the Method Finder branching for more nuanced study designs.
-4. Migrate to a multi-page framework later if you want a richer content system.
+2. Refine the Question Clarifier heuristics and add more rewrite patterns.
+3. Add more methods, especially mediation and moderation content.
+4. Refine the Method Finder branching for more nuanced study designs.
+5. Migrate to a multi-page framework later if you want a richer content system.
