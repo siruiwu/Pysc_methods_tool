@@ -26,6 +26,7 @@
         </button>
         <nav class="site-nav">
           <a href="#clarify">Question Clarifier</a>
+          <a href="#game">Question Game</a>
           <a href="#finder">Method Finder</a>
           <a href="#library">Method Library</a>
           <a href="#compare">Compare</a>
@@ -216,6 +217,62 @@
           </div>
         </section>
 
+        <section class="section" id="game">
+          <div class="section-heading">
+            <p class="eyebrow">Practice through play</p>
+            <h2>Research Question Quest</h2>
+          </div>
+          <p class="section-intro">
+            A short learning game to help students recognize strong research questions, practice narrowing broad ideas, and test their own question with a simple rubric.
+          </p>
+          <div class="game-layout">
+            <aside class="clarifier-sidebar">
+              <h3>Three learning goals</h3>
+              <ul class="plain-list">
+                <li>Notice what makes a question strong</li>
+                <li>Practice how to narrow a broad topic</li>
+                <li>Learn how to self-evaluate your own question</li>
+              </ul>
+              <div class="progress-box">
+                <p class="progress-label">Game progress</p>
+                <p data-game-progress>Round 1 of 5</p>
+                <p class="sidebar-note" data-game-score>Score: 0</p>
+              </div>
+            </aside>
+            <div class="clarifier-main">
+              <div class="finder-card" data-game-card>
+                <div data-game-round></div>
+                <div class="finder-actions">
+                  <button class="button button-primary" type="button" data-game-submit>Check answer</button>
+                  <button class="button button-ghost hidden" type="button" data-game-next>Next round</button>
+                </div>
+                <div class="game-feedback hidden" data-game-feedback></div>
+              </div>
+
+              <section class="results-panel hidden" data-game-finish>
+                <div class="section-heading">
+                  <p class="eyebrow">Boss round</p>
+                  <h3>Score your own research question</h3>
+                </div>
+                <p class="support-copy" data-game-summary></p>
+                <label class="clarifier-label" for="game-selfcheck-input">Paste your own question</label>
+                <textarea
+                  id="game-selfcheck-input"
+                  class="clarifier-input"
+                  rows="4"
+                  placeholder="Example: Among first-year university students, is weekly sleep duration associated with exam anxiety during the first term?"
+                  data-game-selfcheck-input
+                ></textarea>
+                <div class="hero-actions">
+                  <button class="button button-secondary" type="button" data-game-selfcheck-button>Run self-check</button>
+                  <button class="button button-ghost" type="button" data-game-restart>Play again</button>
+                </div>
+                <div class="result-card hidden" data-game-selfcheck-results></div>
+              </section>
+            </div>
+          </div>
+        </section>
+
         <section class="section finder-section" id="finder">
           <div class="section-heading">
             <p class="eyebrow">Step two</p>
@@ -378,6 +435,7 @@
         </div>
         <div class="footer-links">
           <a href="#clarify">Question Clarifier</a>
+          <a href="#game">Question Game</a>
           <a href="#finder">Method Finder</a>
           <a href="#library">Method Library</a>
           <a href="#paths">Learning Paths</a>

@@ -496,6 +496,201 @@
     });
   }
 
+  const gameCard = document.querySelector("[data-game-card]");
+  const gameRound = document.querySelector("[data-game-round]");
+  const gameProgress = document.querySelector("[data-game-progress]");
+  const gameScore = document.querySelector("[data-game-score]");
+  const gameSubmit = document.querySelector("[data-game-submit]");
+  const gameNext = document.querySelector("[data-game-next]");
+  const gameFeedback = document.querySelector("[data-game-feedback]");
+  const gameFinish = document.querySelector("[data-game-finish]");
+  const gameSummary = document.querySelector("[data-game-summary]");
+  const gameRestart = document.querySelector("[data-game-restart]");
+  const gameSelfcheckInput = document.querySelector("[data-game-selfcheck-input]");
+  const gameSelfcheckButton = document.querySelector("[data-game-selfcheck-button]");
+  const gameSelfcheckResults = document.querySelector("[data-game-selfcheck-results]");
+
+  if (gameCard && gameRound && gameSubmit && gameNext && gameFeedback && gameFinish && gameSummary) {
+    // The game deliberately moves from recognition -> narrowing -> self-evaluation so students
+    // practice the same reasoning they need before using the Method Finder on their own project.
+    const gameState = {
+      index: 0,
+      score: 0,
+      selected: null,
+      answered: false
+    };
+
+    function renderGameRound() {
+      const round = data.game.rounds[gameState.index];
+      gameRound.innerHTML = `
+        <div class="finder-question">
+          <p class="eyebrow">${escapeHtml(round.stage)}</p>
+          <h3>${escapeHtml(round.prompt)}</h3>
+        </div>
+        <div class="finder-options">
+          ${round.options
+            .map(
+              (option, index) => `
+                <button class="game-option ${gameState.selected === index ? "selected" : ""}" type="button" data-game-option="${index}">
+                  <strong>${escapeHtml(option.label)}</strong>
+                  <span>${escapeHtml(option.detail)}</span>
+                </button>
+              `
+            )
+            .join("")}
+        </div>
+      `;
+
+      gameRound.querySelectorAll("[data-game-option]").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (gameState.answered) return;
+          gameState.selected = Number(button.dataset.gameOption);
+          renderGameRound();
+        });
+      });
+
+      gameProgress.textContent = `Round ${gameState.index + 1} of ${data.game.rounds.length}`;
+      gameScore.textContent = `Score: ${gameState.score}`;
+      gameFeedback.classList.add("hidden");
+      gameFeedback.classList.remove("correct", "incorrect");
+      gameSubmit.classList.remove("hidden");
+      gameNext.classList.add("hidden");
+    }
+
+    function finishGame() {
+      gameCard.classList.add("hidden");
+      gameFinish.classList.remove("hidden");
+      const total = data.game.rounds.length;
+      let summary = `You scored ${gameState.score} out of ${total}. `;
+      if (gameState.score === total) {
+        summary += "Strong work. You are already noticing the core features of a good research question.";
+      } else if (gameState.score >= total - 1) {
+        summary += "You are close. The main next step is practicing how to turn broad topics into measurable questions.";
+      } else {
+        summary += "Good start. Focus on naming a population, a measurable outcome, and one clear question type.";
+      }
+      gameSummary.textContent = summary;
+      if (gameProgress) gameProgress.textContent = `Completed ${total} of ${total}`;
+      if (gameScore) gameScore.textContent = `Score: ${gameState.score}`;
+    }
+
+    gameSubmit.addEventListener("click", () => {
+      if (gameState.selected === null || gameState.answered) return;
+      const round = data.game.rounds[gameState.index];
+      const correct = gameState.selected === round.correctIndex;
+      gameState.answered = true;
+      if (correct) gameState.score += 1;
+      gameScore.textContent = `Score: ${gameState.score}`;
+      gameFeedback.innerHTML = `
+        <p><strong>${correct ? "Correct" : "Not quite yet"}.</strong> ${escapeHtml(round.explanation)}</p>
+      `;
+      gameFeedback.classList.remove("hidden");
+      gameFeedback.classList.add(correct ? "correct" : "incorrect");
+      gameSubmit.classList.add("hidden");
+      gameNext.classList.remove("hidden");
+    });
+
+    gameNext.addEventListener("click", () => {
+      gameState.index += 1;
+      gameState.selected = null;
+      gameState.answered = false;
+      if (gameState.index >= data.game.rounds.length) {
+        finishGame();
+        return;
+      }
+      renderGameRound();
+    });
+
+    if (gameRestart) {
+      gameRestart.addEventListener("click", () => {
+        gameState.index = 0;
+        gameState.score = 0;
+        gameState.selected = null;
+        gameState.answered = false;
+        gameCard.classList.remove("hidden");
+        gameFinish.classList.add("hidden");
+        if (gameSelfcheckResults) gameSelfcheckResults.classList.add("hidden");
+        renderGameRound();
+      });
+    }
+
+    function evaluateOwnQuestion(text) {
+      const analysis = analyzeNarrativeQuestion(text);
+      if (!analysis) return null;
+
+      const trimmed = text.trim();
+      const wordCount = trimmed.split(/\s+/).filter(Boolean).length;
+      const tooManyAnds = (trimmed.match(/\band\b/gi) || []).length > 2;
+
+      const rubric = [
+        {
+          label: "Clear population",
+          passed: analysis.population !== "your target population",
+          detail: analysis.population !== "your target population" ? `Population detected: ${analysis.population}.` : "The question should name who you want to study."
+        },
+        {
+          label: "Clear question type",
+          passed: analysis.goal !== "unsure",
+          detail: analysis.goal !== "unsure" ? `This looks like a ${prettyLabel(analysis.goal).toLowerCase()} question.` : "It is still unclear whether this is about comparison, relationship, prediction, or description."
+        },
+        {
+          label: "Measurable outcome",
+          passed: analysis.outcomeType !== "unsure",
+          detail: analysis.outcomeType !== "unsure" ? `A likely ${prettyLabel(analysis.outcomeType).toLowerCase()} was detected.` : "Name one measurable outcome instead of only a broad topic."
+        },
+        {
+          label: "Study structure is clear",
+          passed: analysis.structure !== "not-sure",
+          detail: analysis.structure !== "not-sure" ? `Likely structure: ${prettyLabel(analysis.structure).toLowerCase()}.` : "Clarify whether you have groups, repeated measures, or predictor variables."
+        },
+        {
+          label: "Narrow enough for one study",
+          passed: wordCount <= 28 && !tooManyAnds && analysis.goal !== "unsure" && analysis.outcomeType !== "unsure",
+          detail: wordCount <= 28 && !tooManyAnds ? "The wording is focused enough for a small project." : "Try reducing extra clauses and keeping the question focused on one main relationship or comparison."
+        }
+      ];
+
+      const score = rubric.filter((item) => item.passed).length;
+      return { rubric, score, analysis };
+    }
+
+    if (gameSelfcheckButton && gameSelfcheckInput && gameSelfcheckResults) {
+      gameSelfcheckButton.addEventListener("click", () => {
+        const result = evaluateOwnQuestion(gameSelfcheckInput.value);
+        if (!result) return;
+
+        let heading = "Needs more narrowing";
+        if (result.score >= 5) heading = "Strong research question";
+        else if (result.score >= 3) heading = "Promising start";
+
+        gameSelfcheckResults.innerHTML = `
+          <h3>${escapeHtml(heading)}</h3>
+          <p>You met ${result.score} of 5 question-quality checks.</p>
+          <div class="rubric-list">
+            ${result.rubric
+              .map(
+                (item) => `
+                  <div class="rubric-item ${item.passed ? "pass" : "warn"}">
+                    <strong>${item.passed ? "Pass" : "Work on this"}: ${escapeHtml(item.label)}</strong>
+                    <p>${escapeHtml(item.detail)}</p>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+          <div class="hero-mini-card">
+            <span class="mini-step">Rewrite starter</span>
+            <strong>${escapeHtml(result.analysis.rewrite)}</strong>
+            <p>Use this template to revise your question before going to the Question Clarifier or Method Finder.</p>
+          </div>
+        `;
+        gameSelfcheckResults.classList.remove("hidden");
+      });
+    }
+
+    renderGameRound();
+  }
+
   const navToggle = document.querySelector(".nav-toggle");
   const siteNav = document.querySelector(".site-nav");
   if (navToggle && siteNav) {

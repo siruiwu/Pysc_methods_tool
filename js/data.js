@@ -244,6 +244,110 @@ window.siteData = {
       unsure: "Among [population], what is the relationship between [key variable or group] and [measurable outcome]?"
     }
   },
+  game: {
+    rounds: [
+      {
+        stage: "Spot a strong question",
+        prompt: "Which question is stronger for a small undergraduate project on sleep and academic performance?",
+        options: [
+          {
+            label: "How does sleep affect students?",
+            detail: "Broad topic, but still too vague to study directly."
+          },
+          {
+            label: "Among first-year university students, is average nightly sleep duration associated with first-term GPA?",
+            detail: "Clear population, measurable variables, and one focused relationship."
+          },
+          {
+            label: "Why is sleep important?",
+            detail: "Interesting idea, but not a research question with measurable variables."
+          }
+        ],
+        correctIndex: 1,
+        explanation: "The strongest question names a population, a measurable variable, and a clear relationship."
+      },
+      {
+        stage: "Spot a strong question",
+        prompt: "Which question is better if you want to study group differences in stress?",
+        options: [
+          {
+            label: "Do commuter and non-commuter students differ in average perceived stress scores during midterm season?",
+            detail: "Focused comparison with a clear grouping variable and measurable outcome."
+          },
+          {
+            label: "Is commuting bad for students?",
+            detail: "Too broad and value-laden."
+          },
+          {
+            label: "What happens to stress in university?",
+            detail: "Too open and not clearly measurable."
+          }
+        ],
+        correctIndex: 0,
+        explanation: "A good group-comparison question makes the groups and the outcome explicit."
+      },
+      {
+        stage: "Narrow a broad topic",
+        prompt: "A student starts with: 'I want to study social media and wellbeing.' What is the best narrowing move?",
+        options: [
+          {
+            label: "Keep the topic broad so there are more possible methods later.",
+            detail: "Broadness usually makes the project harder, not easier."
+          },
+          {
+            label: "Specify a population, one measurable wellbeing outcome, and one clear social media variable.",
+            detail: "This turns a topic into a study-ready question."
+          },
+          {
+            label: "Replace wellbeing with another abstract word like lifestyle.",
+            detail: "That changes the wording but does not narrow the question."
+          }
+        ],
+        correctIndex: 1,
+        explanation: "Narrowing usually means choosing a population, clarifying one or two variables, and deciding what relationship you want to test."
+      },
+      {
+        stage: "Narrow a broad topic",
+        prompt: "A student asks: 'Does a workshop help students?' What revision narrows the question best?",
+        options: [
+          {
+            label: "Among first-year psychology students, do anxiety scores decrease after a four-week mindfulness workshop?",
+            detail: "This adds population, intervention, outcome, and timing."
+          },
+          {
+            label: "Does a workshop help students a lot?",
+            detail: "Still vague and hard to measure."
+          },
+          {
+            label: "Why are workshops useful?",
+            detail: "Interesting, but not a clear quantitative question."
+          }
+        ],
+        correctIndex: 0,
+        explanation: "A narrowed question usually names who, what changed, and how the change will be measured."
+      },
+      {
+        stage: "Self-evaluate a question",
+        prompt: "A student writes: 'Is mental health important for students?' What is the best self-evaluation?",
+        options: [
+          {
+            label: "It is a good question because mental health is an important topic.",
+            detail: "Importance alone does not make the question research-ready."
+          },
+          {
+            label: "It needs work because the population, variables, and measurable outcome are still unclear.",
+            detail: "This is the strongest evaluation."
+          },
+          {
+            label: "It is good enough because an instructor can help later.",
+            detail: "Feedback helps, but the question still needs to be narrowed."
+          }
+        ],
+        correctIndex: 1,
+        explanation: "A useful self-check asks whether the question is specific, measurable, focused, and feasible for one study."
+      }
+    ]
+  },
   questions: [
     {
       key: "goal",
