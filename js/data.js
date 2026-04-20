@@ -245,106 +245,223 @@ window.siteData = {
     }
   },
   game: {
-    rounds: [
+    intro:
+      "Rescue each student's vague project idea before the proposal deadline. You have limited moves, so every narrowing decision matters.",
+    moveLimit: 5,
+    winThreshold: 4,
+    cases: [
       {
-        stage: "Spot a strong question",
-        prompt: "Which question is stronger for a small undergraduate project on sleep and academic performance?",
-        options: [
+        id: "social-media",
+        student: "Maya",
+        title: "Proposal Rescue 1",
+        brief: "Maya says: 'I want to study social media and wellbeing.'",
+        format: "generic",
+        goalLabel: "Turn a broad topic into one focused relationship question.",
+        starterQuestion: "How does social media affect wellbeing?",
+        goodActions: [
           {
-            label: "How does sleep affect students?",
-            detail: "Broad topic, but still too vague to study directly."
+            id: "population",
+            slot: "population",
+            label: "Name a specific population",
+            detail: "Choose who the study is actually about.",
+            insert: "first-year university students",
+            feedback: "Good move. A strong research question names a concrete population instead of just saying students or people."
           },
           {
-            label: "Among first-year university students, is average nightly sleep duration associated with first-term GPA?",
-            detail: "Clear population, measurable variables, and one focused relationship."
+            id: "focal",
+            slot: "focalVariable",
+            label: "Define the main predictor",
+            detail: "Turn the broad topic into a measurable variable.",
+            insert: "average daily social media use",
+            feedback: "Good move. Narrowing works better when the topic becomes a variable that can actually be measured."
           },
           {
-            label: "Why is sleep important?",
-            detail: "Interesting idea, but not a research question with measurable variables."
+            id: "relation",
+            slot: "relationPhrase",
+            label: "Choose one question type",
+            detail: "Decide what kind of link you are testing.",
+            insert: "associated with",
+            feedback: "Good move. Good questions usually make the type of relationship clearer: comparison, association, prediction, or change."
+          },
+          {
+            id: "outcome",
+            slot: "outcome",
+            label: "Choose a measurable outcome",
+            detail: "Pick one outcome rather than a broad idea.",
+            insert: "self-reported loneliness scores",
+            feedback: "Good move. A measurable outcome is a core part of a usable research question."
+          },
+          {
+            id: "boundary",
+            slot: "boundary",
+            label: "Add a feasible boundary",
+            detail: "Make the study manageable for one project.",
+            insert: "during the first semester",
+            feedback: "Good move. Feasible questions usually have a practical boundary in time, context, or scope."
           }
         ],
-        correctIndex: 1,
-        explanation: "The strongest question names a population, a measurable variable, and a clear relationship."
+        trapActions: [
+          {
+            id: "bigger",
+            label: "Add more big ideas",
+            detail: "Expand the topic to social media, wellbeing, identity, and motivation.",
+            feedback: "That makes the question broader, not sharper. A game-worthy move is to narrow, not pile on more abstract topics."
+          },
+          {
+            id: "causal",
+            label: "Use strong causal wording immediately",
+            detail: "Rewrite it as social media causes loneliness.",
+            feedback: "That jumps too quickly to causation before the design is clear. Start with a question you can realistically study."
+          },
+          {
+            id: "moral",
+            label: "Use evaluative wording",
+            detail: "Ask whether social media is bad for students.",
+            feedback: "Value words like good or bad usually make the question less measurable."
+          }
+        ]
       },
       {
-        stage: "Spot a strong question",
-        prompt: "Which question is better if you want to study group differences in stress?",
-        options: [
+        id: "workshop",
+        student: "Owen",
+        title: "Proposal Rescue 2",
+        brief: "Owen says: 'Does a workshop help students?'",
+        format: "generic",
+        goalLabel: "Rescue a vague intervention question before the proposal meeting.",
+        starterQuestion: "Does a workshop help students?",
+        goodActions: [
           {
-            label: "Do commuter and non-commuter students differ in average perceived stress scores during midterm season?",
-            detail: "Focused comparison with a clear grouping variable and measurable outcome."
+            id: "population",
+            slot: "population",
+            label: "Name a real student group",
+            detail: "Specify who the workshop is meant for.",
+            insert: "first-year psychology students",
+            feedback: "Good move. The population is clearer, which makes the question easier to study and easier to recruit for."
           },
           {
-            label: "Is commuting bad for students?",
-            detail: "Too broad and value-laden."
+            id: "focal",
+            slot: "focalVariable",
+            label: "Specify the intervention or comparison",
+            detail: "State what is actually being tested.",
+            insert: "participation in a four-week mindfulness workshop",
+            feedback: "Good move. Vague words like workshop are much stronger when the intervention is concrete."
           },
           {
-            label: "What happens to stress in university?",
-            detail: "Too open and not clearly measurable."
+            id: "relation",
+            slot: "relationPhrase",
+            label: "Choose the relationship type",
+            detail: "Decide how the intervention relates to the outcome.",
+            insert: "associated with lower",
+            feedback: "Good move. This keeps the wording measurable without claiming too much too early."
+          },
+          {
+            id: "outcome",
+            slot: "outcome",
+            label: "Pick one measurable outcome",
+            detail: "Choose what success will look like.",
+            insert: "perceived stress scores",
+            feedback: "Good move. A good research question usually names one main outcome instead of a vague idea like help."
+          },
+          {
+            id: "boundary",
+            slot: "boundary",
+            label: "Add a study boundary",
+            detail: "Clarify when or where the question applies.",
+            insert: "by the end of the term",
+            feedback: "Good move. A manageable boundary makes the question more feasible for one undergraduate study."
           }
         ],
-        correctIndex: 0,
-        explanation: "A good group-comparison question makes the groups and the outcome explicit."
+        trapActions: [
+          {
+            id: "everything",
+            label: "Ask about every possible benefit",
+            detail: "Include stress, grades, friendships, and sleep in one question.",
+            feedback: "That creates too many outcomes at once. Strong questions usually protect focus."
+          },
+          {
+            id: "magic",
+            label: "Assume the workshop works",
+            detail: "Rewrite it as why the workshop improves students.",
+            feedback: "That assumes the answer before the study. A better move is to frame a testable question."
+          },
+          {
+            id: "vague-pop",
+            label: "Keep the population broad",
+            detail: "Leave it as students in general.",
+            feedback: "That sounds fine at first, but it weakens feasibility and clarity."
+          }
+        ]
       },
       {
-        stage: "Narrow a broad topic",
-        prompt: "A student starts with: 'I want to study social media and wellbeing.' What is the best narrowing move?",
-        options: [
+        id: "sleep-anxiety",
+        student: "Leah",
+        title: "Proposal Rescue 3",
+        brief: "Leah says: 'I want to see whether sleep matters for anxiety.'",
+        format: "generic",
+        goalLabel: "Build a final question that is specific enough to survive a methods-class review.",
+        starterQuestion: "Does sleep matter for anxiety?",
+        goodActions: [
           {
-            label: "Keep the topic broad so there are more possible methods later.",
-            detail: "Broadness usually makes the project harder, not easier."
+            id: "population",
+            slot: "population",
+            label: "Name the population",
+            detail: "Choose who the question is about.",
+            insert: "undergraduate students living in residence",
+            feedback: "Good move. Population helps a broad topic become a study."
           },
           {
-            label: "Specify a population, one measurable wellbeing outcome, and one clear social media variable.",
-            detail: "This turns a topic into a study-ready question."
+            id: "focal",
+            slot: "focalVariable",
+            label: "Define sleep as a variable",
+            detail: "Make the main concept measurable.",
+            insert: "average nightly sleep duration",
+            feedback: "Good move. Sleep becomes more research-ready when it is phrased as something measurable."
           },
           {
-            label: "Replace wellbeing with another abstract word like lifestyle.",
-            detail: "That changes the wording but does not narrow the question."
+            id: "relation",
+            slot: "relationPhrase",
+            label: "Choose one relationship frame",
+            detail: "Stay focused on one kind of answer.",
+            insert: "associated with",
+            feedback: "Good move. A clear relationship frame makes later method choice much easier."
+          },
+          {
+            id: "outcome",
+            slot: "outcome",
+            label: "Make anxiety measurable",
+            detail: "Choose one specific outcome variable.",
+            insert: "weekly anxiety scale scores",
+            feedback: "Good move. A broad idea becomes usable when you attach it to a concrete measure."
+          },
+          {
+            id: "boundary",
+            slot: "boundary",
+            label: "Add a manageable boundary",
+            detail: "Limit time or context so the study stays feasible.",
+            insert: "during the month before final exams",
+            feedback: "Good move. A focused boundary makes the project feel achievable."
           }
         ],
-        correctIndex: 1,
-        explanation: "Narrowing usually means choosing a population, clarifying one or two variables, and deciding what relationship you want to test."
-      },
-      {
-        stage: "Narrow a broad topic",
-        prompt: "A student asks: 'Does a workshop help students?' What revision narrows the question best?",
-        options: [
+        trapActions: [
           {
-            label: "Among first-year psychology students, do anxiety scores decrease after a four-week mindfulness workshop?",
-            detail: "This adds population, intervention, outcome, and timing."
+            id: "double-question",
+            label: "Ask two questions at once",
+            detail: "Also ask whether exercise and diet matter at the same time.",
+            feedback: "That weakens focus. A small study works better when one main question leads the design."
           },
           {
-            label: "Does a workshop help students a lot?",
-            detail: "Still vague and hard to measure."
+            id: "why",
+            label: "Switch to a broad why question",
+            detail: "Ask why students are anxious in general.",
+            feedback: "That may be interesting, but it changes the project into something much broader and less measurable."
           },
           {
-            label: "Why are workshops useful?",
-            detail: "Interesting, but not a clear quantitative question."
+            id: "importance",
+            label: "Use importance language",
+            detail: "Ask whether sleep is important for students.",
+            feedback: "Importance language sounds persuasive, but it does not make the question measurable."
           }
-        ],
-        correctIndex: 0,
-        explanation: "A narrowed question usually names who, what changed, and how the change will be measured."
-      },
-      {
-        stage: "Self-evaluate a question",
-        prompt: "A student writes: 'Is mental health important for students?' What is the best self-evaluation?",
-        options: [
-          {
-            label: "It is a good question because mental health is an important topic.",
-            detail: "Importance alone does not make the question research-ready."
-          },
-          {
-            label: "It needs work because the population, variables, and measurable outcome are still unclear.",
-            detail: "This is the strongest evaluation."
-          },
-          {
-            label: "It is good enough because an instructor can help later.",
-            detail: "Feedback helps, but the question still needs to be narrowed."
-          }
-        ],
-        correctIndex: 1,
-        explanation: "A useful self-check asks whether the question is specific, measurable, focused, and feasible for one study."
+        ]
       }
     ]
   },

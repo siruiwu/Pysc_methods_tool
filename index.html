@@ -223,28 +223,47 @@
             <h2>Research Question Quest</h2>
           </div>
           <p class="section-intro">
-            A short learning game to help students recognize strong research questions, practice narrowing broad ideas, and test their own question with a simple rubric.
+            This mini-game puts students in a proposal-rescue role: each round, they must improve a weak question before the deadline by choosing the best narrowing moves.
           </p>
           <div class="game-layout">
             <aside class="clarifier-sidebar">
-              <h3>Three learning goals</h3>
+              <h3>How the game works</h3>
               <ul class="plain-list">
-                <li>Notice what makes a question strong</li>
-                <li>Practice how to narrow a broad topic</li>
-                <li>Learn how to self-evaluate your own question</li>
+                <li>Rescue a vague question in a limited number of moves</li>
+                <li>Choose narrowing actions that improve clarity and feasibility</li>
+                <li>Watch the quality meter change as the draft gets stronger</li>
               </ul>
               <div class="progress-box">
-                <p class="progress-label">Game progress</p>
-                <p data-game-progress>Round 1 of 5</p>
-                <p class="sidebar-note" data-game-score>Score: 0</p>
+                <p class="progress-label">Proposal meter</p>
+                <p data-game-progress>Case 1 of 3</p>
+                <p class="sidebar-note" data-game-score>Quality: 0 / 5</p>
+                <p class="sidebar-note" data-game-moves>Moves left: 5</p>
               </div>
             </aside>
             <div class="clarifier-main">
               <div class="finder-card" data-game-card>
-                <div data-game-round></div>
+                <div class="game-brief">
+                  <p class="eyebrow" data-game-case-label>Proposal Rescue</p>
+                  <h3 data-game-case-title>Case title</h3>
+                  <p data-game-case-brief></p>
+                  <p class="game-goal" data-game-goal></p>
+                </div>
+                <div class="game-draft">
+                  <p class="card-kicker">Current draft question</p>
+                  <div class="game-question-preview" data-game-preview></div>
+                </div>
+                <div class="game-quality-panel">
+                  <p class="card-kicker">Question quality</p>
+                  <div class="quality-grid" data-game-quality-grid></div>
+                </div>
+                <div>
+                  <p class="card-kicker">Choose your next move</p>
+                  <div class="finder-options" data-game-actions></div>
+                </div>
                 <div class="finder-actions">
-                  <button class="button button-primary" type="button" data-game-submit>Check answer</button>
-                  <button class="button button-ghost hidden" type="button" data-game-next>Next round</button>
+                  <button class="button button-primary" type="button" data-game-play>Make this move</button>
+                  <button class="button button-secondary hidden" type="button" data-game-next-case>Next case</button>
+                  <button class="button button-ghost hidden" type="button" data-game-retry-case>Retry case</button>
                 </div>
                 <div class="game-feedback hidden" data-game-feedback></div>
               </div>

@@ -497,11 +497,19 @@
   }
 
   const gameCard = document.querySelector("[data-game-card]");
-  const gameRound = document.querySelector("[data-game-round]");
+  const gameCaseLabel = document.querySelector("[data-game-case-label]");
+  const gameCaseTitle = document.querySelector("[data-game-case-title]");
+  const gameCaseBrief = document.querySelector("[data-game-case-brief]");
+  const gameGoal = document.querySelector("[data-game-goal]");
+  const gamePreview = document.querySelector("[data-game-preview]");
+  const gameQualityGrid = document.querySelector("[data-game-quality-grid]");
+  const gameActions = document.querySelector("[data-game-actions]");
   const gameProgress = document.querySelector("[data-game-progress]");
   const gameScore = document.querySelector("[data-game-score]");
-  const gameSubmit = document.querySelector("[data-game-submit]");
-  const gameNext = document.querySelector("[data-game-next]");
+  const gameMoves = document.querySelector("[data-game-moves]");
+  const gamePlay = document.querySelector("[data-game-play]");
+  const gameNextCase = document.querySelector("[data-game-next-case]");
+  const gameRetryCase = document.querySelector("[data-game-retry-case]");
   const gameFeedback = document.querySelector("[data-game-feedback]");
   const gameFinish = document.querySelector("[data-game-finish]");
   const gameSummary = document.querySelector("[data-game-summary]");
@@ -510,107 +518,271 @@
   const gameSelfcheckButton = document.querySelector("[data-game-selfcheck-button]");
   const gameSelfcheckResults = document.querySelector("[data-game-selfcheck-results]");
 
-  if (gameCard && gameRound && gameSubmit && gameNext && gameFeedback && gameFinish && gameSummary) {
-    // The game deliberately moves from recognition -> narrowing -> self-evaluation so students
-    // practice the same reasoning they need before using the Method Finder on their own project.
+  if (
+    gameCard &&
+    gameCaseTitle &&
+    gameCaseBrief &&
+    gameGoal &&
+    gamePreview &&
+    gameQualityGrid &&
+    gameActions &&
+    gamePlay &&
+    gameNextCase &&
+    gameRetryCase &&
+    gameFeedback &&
+    gameFinish &&
+    gameSummary
+  ) {
+    // The game deliberately turns narrowing into a move-based puzzle so students practice
+    // improving a weak question under constraints instead of only recognizing the right answer.
     const gameState = {
-      index: 0,
-      score: 0,
-      selected: null,
-      answered: false
+      caseIndex: 0,
+      selectedActionId: null,
+      movesLeft: data.game.moveLimit,
+      builtSlots: {},
+      quality: {
+        specificity: false,
+        variable: false,
+        outcome: false,
+        questionType: false,
+        feasibility: false
+      },
+      usedActions: [],
+      visibleActions: []
     };
 
-    function renderGameRound() {
-      const round = data.game.rounds[gameState.index];
-      gameRound.innerHTML = `
-        <div class="finder-question">
-          <p class="eyebrow">${escapeHtml(round.stage)}</p>
-          <h3>${escapeHtml(round.prompt)}</h3>
-        </div>
-        <div class="finder-options">
-          ${round.options
-            .map(
-              (option, index) => `
-                <button class="game-option ${gameState.selected === index ? "selected" : ""}" type="button" data-game-option="${index}">
-                  <strong>${escapeHtml(option.label)}</strong>
-                  <span>${escapeHtml(option.detail)}</span>
-                </button>
-              `
-            )
-            .join("")}
-        </div>
-      `;
+    function getCurrentCase() {
+      return data.game.cases[gameState.caseIndex];
+    }
 
-      gameRound.querySelectorAll("[data-game-option]").forEach((button) => {
+    function shuffle(items) {
+      const copy = [...items];
+      for (let index = copy.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+      }
+      return copy;
+    }
+
+    function resetQuality() {
+      gameState.quality = {
+        specificity: false,
+        variable: false,
+        outcome: false,
+        questionType: false,
+        feasibility: false
+      };
+    }
+
+    function qualityScore() {
+      return Object.values(gameState.quality).filter(Boolean).length;
+    }
+
+    function qualityMap(slot) {
+      const map = {
+        population: "specificity",
+        focalVariable: "variable",
+        outcome: "outcome",
+        relationPhrase: "questionType",
+        boundary: "feasibility"
+      };
+      return map[slot];
+    }
+
+    function buildPreview() {
+      const population = gameState.builtSlots.population || "[population]";
+      const focalVariable = gameState.builtSlots.focalVariable || "[main variable]";
+      const relationPhrase = gameState.builtSlots.relationPhrase || "[relationship or comparison phrase]";
+      const outcome = gameState.builtSlots.outcome || "[measurable outcome]";
+      const boundary = gameState.builtSlots.boundary || "[feasible boundary]";
+      return `Among ${population}, is ${focalVariable} ${relationPhrase} ${outcome} ${boundary}?`;
+    }
+
+    function remainingActions() {
+      const currentCase = getCurrentCase();
+      const allActions = [...currentCase.goodActions, ...currentCase.trapActions];
+      return allActions.filter((action) => !gameState.usedActions.includes(action.id));
+    }
+
+    function prepareVisibleActions() {
+      const currentCase = getCurrentCase();
+      const goodRemaining = currentCase.goodActions.filter((action) => !gameState.usedActions.includes(action.id));
+      const allRemaining = remainingActions();
+
+      if (allRemaining.length <= 4) {
+        gameState.visibleActions = shuffle(allRemaining);
+        return;
+      }
+
+      const chosen = [];
+      if (goodRemaining.length) {
+        chosen.push(shuffle(goodRemaining)[0]);
+      }
+
+      const extras = shuffle(allRemaining.filter((action) => !chosen.some((item) => item.id === action.id))).slice(
+        0,
+        4 - chosen.length
+      );
+      gameState.visibleActions = shuffle([...chosen, ...extras]);
+    }
+
+    function renderQualityGrid() {
+      const items = [
+        { key: "specificity", label: "Population" },
+        { key: "variable", label: "Variable" },
+        { key: "outcome", label: "Outcome" },
+        { key: "questionType", label: "Question type" },
+        { key: "feasibility", label: "Feasibility" }
+      ];
+
+      gameQualityGrid.innerHTML = items
+        .map(
+          (item) => `
+            <div class="quality-pill ${gameState.quality[item.key] ? "pass" : "warn"}">
+              <strong>${escapeHtml(item.label)}</strong>
+              <span>${gameState.quality[item.key] ? "Locked in" : "Missing"}</span>
+            </div>
+          `
+        )
+        .join("");
+    }
+
+    function renderActions() {
+      gameActions.innerHTML = gameState.visibleActions
+        .map(
+          (action) => `
+            <button class="game-option ${gameState.selectedActionId === action.id ? "selected" : ""}" type="button" data-game-action="${action.id}">
+              <strong>${escapeHtml(action.label)}</strong>
+              <span>${escapeHtml(action.detail)}</span>
+            </button>
+          `
+        )
+        .join("");
+
+      gameActions.querySelectorAll("[data-game-action]").forEach((button) => {
         button.addEventListener("click", () => {
-          if (gameState.answered) return;
-          gameState.selected = Number(button.dataset.gameOption);
-          renderGameRound();
+          gameState.selectedActionId = button.dataset.gameAction;
+          renderActions();
         });
       });
+    }
 
-      gameProgress.textContent = `Round ${gameState.index + 1} of ${data.game.rounds.length}`;
-      gameScore.textContent = `Score: ${gameState.score}`;
+    function renderCase() {
+      const currentCase = getCurrentCase();
+      if (!currentCase) return;
+
+      gameCaseLabel.textContent = currentCase.title;
+      gameCaseTitle.textContent = `${currentCase.student}'s draft is in trouble`;
+      gameCaseBrief.textContent = currentCase.brief;
+      gameGoal.textContent = currentCase.goalLabel;
+      gamePreview.textContent = buildPreview();
+      renderQualityGrid();
+      renderActions();
+
+      gameProgress.textContent = `Case ${gameState.caseIndex + 1} of ${data.game.cases.length}`;
+      gameScore.textContent = `Quality: ${qualityScore()} / 5`;
+      if (gameMoves) gameMoves.textContent = `Moves left: ${gameState.movesLeft}`;
+
+      gamePlay.classList.remove("hidden");
+      gameNextCase.classList.add("hidden");
+      gameRetryCase.classList.add("hidden");
       gameFeedback.classList.add("hidden");
       gameFeedback.classList.remove("correct", "incorrect");
-      gameSubmit.classList.remove("hidden");
-      gameNext.classList.add("hidden");
+    }
+
+    function startCase(caseIndex) {
+      gameState.caseIndex = caseIndex;
+      gameState.selectedActionId = null;
+      gameState.movesLeft = data.game.moveLimit;
+      gameState.builtSlots = {};
+      gameState.usedActions = [];
+      resetQuality();
+      prepareVisibleActions();
+      renderCase();
+    }
+
+    function resolveMove() {
+      if (!gameState.selectedActionId || gameState.movesLeft <= 0) return;
+      const currentCase = getCurrentCase();
+      const action =
+        currentCase.goodActions.find((item) => item.id === gameState.selectedActionId) ||
+        currentCase.trapActions.find((item) => item.id === gameState.selectedActionId);
+      if (!action) return;
+
+      gameState.movesLeft -= 1;
+      gameState.usedActions.push(action.id);
+
+      const beneficial = Object.prototype.hasOwnProperty.call(action, "slot");
+      if (beneficial) {
+        gameState.builtSlots[action.slot] = action.insert;
+        const qualityKey = qualityMap(action.slot);
+        if (qualityKey) gameState.quality[qualityKey] = true;
+      }
+
+      gameFeedback.innerHTML = `
+        <p><strong>${beneficial ? "Good move." : "That costs you a move."}</strong> ${escapeHtml(action.feedback)}</p>
+      `;
+      gameFeedback.classList.remove("hidden");
+      gameFeedback.classList.remove("correct", "incorrect");
+      gameFeedback.classList.add(beneficial ? "correct" : "incorrect");
+
+      const passed = qualityScore() >= data.game.winThreshold;
+      const finished = passed || gameState.movesLeft === 0;
+
+      if (finished) {
+        gamePlay.classList.add("hidden");
+        if (passed) {
+          gameNextCase.classList.remove("hidden");
+          gameFeedback.innerHTML += `<p><strong>Rescued.</strong> This draft is now focused enough to move forward.</p>`;
+        } else {
+          gameRetryCase.classList.remove("hidden");
+          gameFeedback.innerHTML += `<p><strong>Deadline missed.</strong> Try the case again and prioritize moves that make the question specific, measurable, and feasible.</p>`;
+        }
+      } else {
+        gameState.selectedActionId = null;
+        prepareVisibleActions();
+      }
+
+      gamePreview.textContent = buildPreview();
+      renderQualityGrid();
+      renderActions();
+      gameScore.textContent = `Quality: ${qualityScore()} / 5`;
+      if (gameMoves) gameMoves.textContent = `Moves left: ${gameState.movesLeft}`;
     }
 
     function finishGame() {
       gameCard.classList.add("hidden");
       gameFinish.classList.remove("hidden");
-      const total = data.game.rounds.length;
-      let summary = `You scored ${gameState.score} out of ${total}. `;
-      if (gameState.score === total) {
-        summary += "Strong work. You are already noticing the core features of a good research question.";
-      } else if (gameState.score >= total - 1) {
-        summary += "You are close. The main next step is practicing how to turn broad topics into measurable questions.";
-      } else {
-        summary += "Good start. Focus on naming a population, a measurable outcome, and one clear question type.";
-      }
-      gameSummary.textContent = summary;
-      if (gameProgress) gameProgress.textContent = `Completed ${total} of ${total}`;
-      if (gameScore) gameScore.textContent = `Score: ${gameState.score}`;
+      gameSummary.textContent =
+        "You completed the proposal rescues. Now test your own question with the same quality logic: population, variable, outcome, question type, and feasibility.";
+      gameProgress.textContent = `Completed ${data.game.cases.length} of ${data.game.cases.length}`;
+      gameScore.textContent = `Quality: final self-check`;
+      if (gameMoves) gameMoves.textContent = data.game.intro;
     }
 
-    gameSubmit.addEventListener("click", () => {
-      if (gameState.selected === null || gameState.answered) return;
-      const round = data.game.rounds[gameState.index];
-      const correct = gameState.selected === round.correctIndex;
-      gameState.answered = true;
-      if (correct) gameState.score += 1;
-      gameScore.textContent = `Score: ${gameState.score}`;
-      gameFeedback.innerHTML = `
-        <p><strong>${correct ? "Correct" : "Not quite yet"}.</strong> ${escapeHtml(round.explanation)}</p>
-      `;
-      gameFeedback.classList.remove("hidden");
-      gameFeedback.classList.add(correct ? "correct" : "incorrect");
-      gameSubmit.classList.add("hidden");
-      gameNext.classList.remove("hidden");
+    gamePlay.addEventListener("click", () => {
+      resolveMove();
     });
 
-    gameNext.addEventListener("click", () => {
-      gameState.index += 1;
-      gameState.selected = null;
-      gameState.answered = false;
-      if (gameState.index >= data.game.rounds.length) {
+    gameNextCase.addEventListener("click", () => {
+      const nextIndex = gameState.caseIndex + 1;
+      if (nextIndex >= data.game.cases.length) {
         finishGame();
         return;
       }
-      renderGameRound();
+      startCase(nextIndex);
+    });
+
+    gameRetryCase.addEventListener("click", () => {
+      startCase(gameState.caseIndex);
     });
 
     if (gameRestart) {
       gameRestart.addEventListener("click", () => {
-        gameState.index = 0;
-        gameState.score = 0;
-        gameState.selected = null;
-        gameState.answered = false;
         gameCard.classList.remove("hidden");
         gameFinish.classList.add("hidden");
         if (gameSelfcheckResults) gameSelfcheckResults.classList.add("hidden");
-        renderGameRound();
+        startCase(0);
       });
     }
 
@@ -688,7 +860,7 @@
       });
     }
 
-    renderGameRound();
+    startCase(0);
   }
 
   const navToggle = document.querySelector(".nav-toggle");

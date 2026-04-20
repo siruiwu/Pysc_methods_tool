@@ -471,6 +471,8 @@ h3 {
 
 .game-option {
   display: block;
+  width: 100%;
+  text-align: left;
   padding: 1rem 1.1rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
@@ -510,6 +512,57 @@ h3 {
 
 .rubric-item.warn {
   background: rgba(199, 107, 73, 0.12);
+}
+
+.game-brief,
+.game-draft,
+.game-quality-panel {
+  margin-bottom: 1.1rem;
+}
+
+.game-goal {
+  margin: 0;
+  color: var(--accent-deep);
+  font-weight: 700;
+}
+
+.game-question-preview {
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-md);
+  background: rgba(43, 122, 119, 0.1);
+  color: var(--text);
+  font-size: 1.02rem;
+}
+
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.quality-pill {
+  padding: 0.8rem 0.7rem;
+  border-radius: 16px;
+  background: rgba(24, 50, 49, 0.06);
+  text-align: center;
+}
+
+.quality-pill.pass {
+  background: rgba(43, 122, 119, 0.14);
+}
+
+.quality-pill.warn {
+  background: rgba(199, 107, 73, 0.12);
+}
+
+.quality-pill strong,
+.quality-pill span {
+  display: block;
+}
+
+.quality-pill span {
+  color: var(--text-soft);
+  font-size: 0.9rem;
 }
 
 .sidebar-note {
@@ -633,7 +686,8 @@ select {
   .steps,
   .case-study,
   .card-grid-3,
-  .clarifier-grid {
+  .clarifier-grid,
+  .quality-grid {
     grid-template-columns: 1fr;
   }
 

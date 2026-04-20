@@ -15,7 +15,7 @@ Open `index.html` in a browser.
 
 - Homepage and project positioning
 - Narrative Question Clarifier that starts from a student-written research question
-- Research Question Quest mini-game for spotting, narrowing, and self-checking research questions
+- Research Question Quest turn-based mini-game for rescuing weak research questions through move-based narrowing decisions
 - Guided Method Finder
 - Method Library cards with search and filtering
 - Compare Methods, Research Scenarios, Learning Paths, and Resources sections
