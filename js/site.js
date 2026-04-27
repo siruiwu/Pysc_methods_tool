@@ -37,6 +37,12 @@
       <p>${method.summary}</p>
       <p><strong>Best for:</strong> ${method.bestUseCase}</p>
       <p><strong>Common confusion:</strong> ${method.confusion}</p>
+      ${method.exampleSourceName ? `<p><strong>Worked example source:</strong> ${method.exampleSourceName}</p>` : ""}
+      ${
+        method.exampleUrl
+          ? `<div class="card-actions"><a class="button button-secondary" href="${method.exampleUrl}" target="_blank" rel="noreferrer noopener">${method.exampleLabel || "Open worked example"}</a></div>`
+          : ""
+      }
     `;
     return card;
   }
@@ -53,14 +59,49 @@
     return card;
   }
 
+  function resourceCard(resource) {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.innerHTML = `
+      <p class="card-kicker">Foundation resource</p>
+      <h3>${resource.title}</h3>
+      <p>${resource.summary}</p>
+      ${resource.audience ? `<p><strong>Best for:</strong> ${resource.audience}</p>` : ""}
+      ${resource.sourceName ? `<p><strong>Source:</strong> ${resource.sourceName}</p>` : ""}
+      ${
+        resource.url
+          ? `<div class="card-actions"><a class="button button-secondary" href="${resource.url}" target="_blank" rel="noreferrer noopener">${resource.sourceLabel || "Open resource"}</a></div>`
+          : ""
+      }
+    `;
+    return card;
+  }
+
+  function scenarioCard(item) {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.innerHTML = `
+      <p class="card-kicker">Research scenario</p>
+      <h3>${item.title}</h3>
+      <p>${item.description}</p>
+      <p><strong>Likely methods:</strong> ${item.methods}</p>
+      <p><strong>Typical question:</strong> ${item.question}</p>
+    `;
+    return card;
+  }
+
+  function getResourceBySlug(slug) {
+    return data.resources.find((resource) => resource.slug === slug) || null;
+  }
+
   fillGrid(methodGrid, data.methods, methodCard);
   fillGrid(comparisonGrid, data.comparisons, (item) => simpleCard(item, "Comparison guide"));
-  fillGrid(scenarioGrid, data.scenarios, (item) => simpleCard(item, "Research scenario", "Typical question", item.question));
+  fillGrid(scenarioGrid, data.scenarios, scenarioCard);
   fillGrid(pathGrid, data.paths, (item) => simpleCard(item, "Learning path", "Modules", item.modules));
-  fillGrid(resourceGrid, data.resources, (item) => simpleCard(item, "Foundation resource"));
+  fillGrid(resourceGrid, data.resources, resourceCard);
 
   if (featuredComparisons) {
-    fillGrid(featuredComparisons, data.comparisons.slice(0, 4), (item) => {
+    fillGrid(featuredComparisons, data.comparisons.slice(0, 6), (item) => {
       const card = document.createElement("article");
       card.className = "topic-card";
       card.innerHTML = `
@@ -175,11 +216,13 @@
       if (design && method.designs.includes(design)) score += 2;
 
       if (goal === "compare-groups" && structure === "same-participants-twice" && method.slug === "paired-t-test") score += 3;
+      if (goal === "compare-groups" && structure === "same-participants-three-plus" && method.slug === "repeated-measures-anova") score += 3;
       if (goal === "compare-groups" && structure === "two-independent-groups" && method.slug === "independent-t-test") score += 3;
       if (goal === "compare-groups" && structure === "three-plus-groups" && method.slug === "one-way-anova") score += 3;
       if (goal === "relationship" && structure === "two-continuous-variables" && method.slug === "correlation") score += 3;
       if (goal === "predict" && outcomeType === "continuous" && method.slug === "linear-regression") score += 3;
       if (goal === "predict" && (outcomeType === "binary" || outcomeType === "categorical") && method.slug === "logistic-regression") score += 3;
+      if (goal === "predict" && outcomeType === "count" && method.slug === "poisson-regression") score += 3;
 
       return score;
     }
@@ -215,6 +258,12 @@
             <p><strong>Why it may fit:</strong> ${method.useWhen}</p>
             <p><strong>What to check next:</strong> ${method.checkNext}</p>
             <p><strong>Common confusion:</strong> ${method.confusion}</p>
+            ${method.exampleSourceName ? `<p><strong>Worked example source:</strong> ${method.exampleSourceName}</p>` : ""}
+            ${
+              method.exampleUrl
+                ? `<div class="card-actions"><a class="button button-secondary" href="${method.exampleUrl}" target="_blank" rel="noreferrer noopener">${method.exampleLabel || "Open worked example"}</a></div>`
+                : ""
+            }
           `;
           resultsList.appendChild(card);
         });
@@ -276,6 +325,8 @@
   const questionSummary = document.querySelector("[data-question-summary]");
   const questionShape = document.querySelector("[data-question-shape]");
   const questionGaps = document.querySelector("[data-question-gaps]");
+  const questionResourceCard = document.querySelector("[data-question-resource-card]");
+  const questionResource = document.querySelector("[data-question-resource]");
   const questionRewrite = document.querySelector("[data-question-rewrite]");
   const analyzeButton = document.querySelector("[data-question-analyze]");
   const exampleButton = document.querySelector("[data-question-example]");
@@ -316,6 +367,7 @@
 
   function inferDesign(text, structureKey) {
     if (structureKey === "same-participants-twice") return "pre-post";
+    if (structureKey === "same-participants-three-plus") return "repeated";
     if (text.includes("experiment") || text.includes("condition") || text.includes("treatment") || text.includes("control")) {
       return "experimental";
     }
@@ -367,19 +419,59 @@
 
   function buildMissingPieces(text, goalKey, structureKey, outcomeType) {
     const gaps = [];
+    const hasMeasurementLanguage =
+      text.includes("score") ||
+      text.includes("measure") ||
+      text.includes("scale") ||
+      text.includes("survey") ||
+      text.includes("questionnaire") ||
+      text.includes("hours") ||
+      text.includes("duration") ||
+      text.includes("frequency") ||
+      text.includes("count") ||
+      text.includes("rate") ||
+      text.includes("rating");
+
     if (goalKey === "unsure") gaps.push("Decide whether the question is mainly about differences, relationships, prediction, or description.");
     if (structureKey === "not-sure") gaps.push("Clarify whether you have groups, repeated measures, or predictor variables.");
     if (outcomeType === "unsure") gaps.push("Name one measurable outcome and decide whether it is continuous, categorical, binary, or a count.");
     if (!text.includes("student") && !text.includes("participants") && !text.includes("people") && !text.includes("adults")) {
       gaps.push("Specify the population you want to study.");
     }
-    if (!text.includes("score") && !text.includes("measure") && !text.includes("scale") && !text.includes("survey")) {
+    if (!hasMeasurementLanguage) {
       gaps.push("State how the main concept will be measured, not just what broad topic interests you.");
     }
     if (!gaps.length) {
       gaps.push("The main next step is to define your variables in measurable terms and confirm the study design.");
     }
     return gaps;
+  }
+
+  function getClarifierResourceRecommendation(result, rawQuestion) {
+    const normalized = rawQuestion.trim().toLowerCase();
+    // When a question is still broad or under-measured, send students to measurement-focused support first.
+    const hasMeasurementLanguage =
+      normalized.includes("score") ||
+      normalized.includes("measure") ||
+      normalized.includes("scale") ||
+      normalized.includes("survey") ||
+      normalized.includes("questionnaire") ||
+      normalized.includes("hours") ||
+      normalized.includes("duration") ||
+      normalized.includes("frequency") ||
+      normalized.includes("count") ||
+      normalized.includes("rate") ||
+      normalized.includes("rating");
+    const needsMeasurementSupport =
+      result.outcomeType === "unsure" ||
+      result.missingPieces.some((gap) => gap.includes("State how the main concept will be measured")) ||
+      !hasMeasurementLanguage;
+
+    if (needsMeasurementSupport) {
+      return getResourceBySlug("measurement-reliability-validity");
+    }
+
+    return null;
   }
 
   function analyzeNarrativeQuestion(rawQuestion) {
@@ -418,10 +510,12 @@
       unsure: "Still unclear",
       "two-independent-groups": "Two separate groups",
       "same-participants-twice": "Same participants measured twice",
+      "same-participants-three-plus": "Same participants measured three or more times",
       "three-plus-groups": "Three or more groups",
       "two-continuous-variables": "Two continuous variables",
       "predictors-to-outcome": "Predictors for a continuous outcome",
       "predictors-to-categorical-outcome": "Predictors for a categorical outcome",
+      "predictors-to-count-outcome": "Predictors for a count outcome",
       "two-categorical-variables": "Two categorical variables",
       "sample-summary": "Descriptive summary",
       "not-sure": "Not yet clear",
@@ -440,6 +534,8 @@
   function renderClarifierResult(result) {
     if (!questionResults || !questionSummary || !questionShape || !questionGaps || !questionRewrite) return;
 
+    const recommendedResource = questionInput ? getClarifierResourceRecommendation(result, questionInput.value) : null;
+
     questionSummary.innerHTML = `
       <p>This question currently looks most like a <strong>${escapeHtml(prettyLabel(result.goal).toLowerCase())}</strong> question for <strong>${escapeHtml(result.population)}</strong>.</p>
       <p>The likely next move is to turn the broad idea into a measurable outcome and a clearer design statement.</p>
@@ -456,6 +552,34 @@
     questionGaps.innerHTML = `
       <ul class="plain-list">${result.missingPieces.map((gap) => `<li>${gap}</li>`).join("")}</ul>
     `;
+
+    if (questionResourceCard && questionResource) {
+      if (recommendedResource) {
+        questionResource.innerHTML = `
+          <h3>${escapeHtml(recommendedResource.title)}</h3>
+          <p>${escapeHtml(recommendedResource.summary)}</p>
+          ${
+            recommendedResource.audience
+              ? `<p><strong>Why this fits now:</strong> ${escapeHtml(recommendedResource.audience)}</p>`
+              : ""
+          }
+          ${
+            recommendedResource.sourceName
+              ? `<p><strong>Source:</strong> ${escapeHtml(recommendedResource.sourceName)}</p>`
+              : ""
+          }
+          ${
+            recommendedResource.url
+              ? `<div class="card-actions"><a class="button button-secondary" href="${recommendedResource.url}" target="_blank" rel="noreferrer noopener">${escapeHtml(recommendedResource.sourceLabel || "Open resource")}</a></div>`
+              : ""
+          }
+        `;
+        questionResourceCard.classList.remove("hidden");
+      } else {
+        questionResource.innerHTML = "";
+        questionResourceCard.classList.add("hidden");
+      }
+    }
 
     questionRewrite.innerHTML = `
       <p>${result.rewrite}</p>

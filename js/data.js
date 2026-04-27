@@ -13,7 +13,10 @@ window.siteData = {
       designs: ["cross-sectional", "experimental", "pre-post", "repeated", "unsure"],
       useWhen: "Use this when your goal is to describe scores, frequencies, or distributions.",
       checkNext: "Make sure you are not treating a descriptive summary as if it were a hypothesis test.",
-      confusion: "Describing a variable is not the same as testing a relationship or effect."
+      confusion: "Describing a variable is not the same as testing a relationship or effect.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
     },
     {
       slug: "independent-t-test",
@@ -28,7 +31,10 @@ window.siteData = {
       designs: ["experimental", "cross-sectional", "unsure"],
       useWhen: "Use this when you have two different groups and a continuous outcome.",
       checkNext: "Confirm that the same participants were not measured twice.",
-      confusion: "Often confused with the paired t-test when students forget the data are independent."
+      confusion: "Often confused with the paired t-test when students forget the data are independent.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
     },
     {
       slug: "paired-t-test",
@@ -43,7 +49,10 @@ window.siteData = {
       designs: ["pre-post", "repeated", "unsure"],
       useWhen: "Use this when observations are linked, such as before and after scores for the same people.",
       checkNext: "Make sure each score in one column has a clear partner in the other column.",
-      confusion: "Often confused with the independent t-test because both compare two sets of scores."
+      confusion: "Often confused with the independent t-test because both compare two sets of scores.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
     },
     {
       slug: "one-way-anova",
@@ -58,7 +67,28 @@ window.siteData = {
       designs: ["experimental", "cross-sectional", "unsure"],
       useWhen: "Use this when you want to compare means across three or more groups.",
       checkNext: "Remember that the overall ANOVA does not by itself tell you which groups differ.",
-      confusion: "Often confused with a t-test when students focus on means but ignore the number of groups."
+      confusion: "Often confused with a t-test when students focus on means but ignore the number of groups.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
+    },
+    {
+      slug: "repeated-measures-anova",
+      title: "Repeated Measures ANOVA",
+      category: "Repeated measures",
+      difficulty: "Intermediate",
+      summary: "Compare a continuous outcome across three or more linked measurements from the same participants.",
+      bestUseCase: "Three or more time points or conditions with the same participants.",
+      researchGoals: ["compare-groups", "unsure"],
+      outcomeTypes: ["continuous", "unsure"],
+      structures: ["same-participants-three-plus", "not-sure"],
+      designs: ["repeated", "pre-post", "unsure"],
+      useWhen: "Use this when the same people are measured across more than two occasions or conditions.",
+      checkNext: "Check whether your repeated measurements really come from the same participants across all time points or conditions.",
+      confusion: "Often confused with the paired t-test, which is only for two linked measurements.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
     },
     {
       slug: "correlation",
@@ -73,7 +103,10 @@ window.siteData = {
       designs: ["cross-sectional", "experimental", "unsure"],
       useWhen: "Use this when your main question is about association rather than prediction.",
       checkNext: "Keep in mind that correlation does not establish causation.",
-      confusion: "Often confused with regression because both can involve the same pair of variables."
+      confusion: "Often confused with regression because both can involve the same pair of variables.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
     },
     {
       slug: "linear-regression",
@@ -88,7 +121,46 @@ window.siteData = {
       designs: ["cross-sectional", "experimental", "unsure"],
       useWhen: "Use this when you want one variable to play the role of outcome and the others to be predictors.",
       checkNext: "Make sure the outcome is really continuous enough for a linear model.",
-      confusion: "Often confused with correlation, even though regression gives the variables different roles."
+      confusion: "Often confused with correlation, even though regression gives the variables different roles.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
+    },
+    {
+      slug: "mediation-analysis",
+      title: "Mediation Analysis",
+      category: "Mechanisms",
+      difficulty: "Intermediate-Advanced",
+      summary: "Test whether the relationship between a predictor and an outcome may work through a third variable.",
+      bestUseCase: "Questions about how or why one variable relates to another.",
+      researchGoals: ["relationship", "predict", "unsure"],
+      outcomeTypes: ["continuous", "binary", "unsure"],
+      structures: ["predictors-to-outcome", "predictors-to-categorical-outcome", "not-sure"],
+      designs: ["cross-sectional", "experimental", "unsure"],
+      useWhen: "Use this when your question is about a possible pathway or mechanism rather than only whether two variables are related.",
+      checkNext: "Make sure you can clearly justify the order of variables and explain why the mediator belongs between the predictor and the outcome.",
+      confusion: "Often confused with moderation because both add a third variable, but mediation asks how or why while moderation asks when or for whom.",
+      exampleSourceName: "JASP",
+      exampleUrl: "https://jasp-stats.org/2020/03/12/mediation-and-moderation-analysis-in-jasp/",
+      exampleLabel: "Read a guided tutorial"
+    },
+    {
+      slug: "moderation-analysis",
+      title: "Moderation Analysis",
+      category: "Mechanisms",
+      difficulty: "Intermediate-Advanced",
+      summary: "Test whether the relationship between two variables changes across levels of a third variable.",
+      bestUseCase: "Questions about when, for whom, or under what conditions an effect changes.",
+      researchGoals: ["relationship", "predict", "compare-groups", "unsure"],
+      outcomeTypes: ["continuous", "binary", "unsure"],
+      structures: ["predictors-to-outcome", "predictors-to-categorical-outcome", "not-sure"],
+      designs: ["cross-sectional", "experimental", "unsure"],
+      useWhen: "Use this when you expect the size or direction of an effect to differ across people, contexts, or conditions.",
+      checkNext: "Decide what variable plays the role of moderator and whether the moderation idea is theoretically justified before testing interactions.",
+      confusion: "Often confused with mediation because both add a third variable, but moderation is about interaction rather than a pathway.",
+      exampleSourceName: "JASP",
+      exampleUrl: "https://jasp-stats.org/2020/03/12/mediation-and-moderation-analysis-in-jasp/",
+      exampleLabel: "Read a guided tutorial"
     },
     {
       slug: "chi-square",
@@ -103,7 +175,10 @@ window.siteData = {
       designs: ["cross-sectional", "experimental", "unsure"],
       useWhen: "Use this when your data are category counts and your question is about association.",
       checkNext: "Think in terms of counts in categories, not mean scores.",
-      confusion: "Often confused with logistic regression when the outcome is categorical."
+      confusion: "Often confused with logistic regression when the outcome is categorical.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
     },
     {
       slug: "logistic-regression",
@@ -118,7 +193,28 @@ window.siteData = {
       designs: ["cross-sectional", "experimental", "unsure"],
       useWhen: "Use this when the outcome is binary or categorical and prediction is the goal.",
       checkNext: "Check whether you really need a predictive model rather than a simpler categorical association test.",
-      confusion: "Often confused with chi-square because both may involve categorical outcomes."
+      confusion: "Often confused with chi-square because both may involve categorical outcomes.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
+    },
+    {
+      slug: "poisson-regression",
+      title: "Poisson Regression",
+      category: "Count outcomes",
+      difficulty: "Intermediate",
+      summary: "Model how predictors relate to an outcome that counts events, visits, or occurrences.",
+      bestUseCase: "Prediction questions where the outcome is a count rather than a score or yes-or-no variable.",
+      researchGoals: ["predict", "unsure"],
+      outcomeTypes: ["count", "unsure"],
+      structures: ["predictors-to-count-outcome", "not-sure"],
+      designs: ["cross-sectional", "experimental", "repeated", "unsure"],
+      useWhen: "Use this when the outcome is a count, such as number of visits, incidents, or symptoms.",
+      checkNext: "Confirm that the outcome is really a count and consider whether the data may be too spread out for a simple Poisson model.",
+      confusion: "Often confused with linear regression when students treat counts as if they were ordinary continuous scores.",
+      exampleSourceName: "UCLA OARC",
+      exampleUrl: "https://stats.oarc.ucla.edu/annotatedoutput",
+      exampleLabel: "Find annotated output"
     }
   ],
   comparisons: [
@@ -141,6 +237,14 @@ window.siteData = {
     {
       title: "Mediation vs Moderation",
       summary: "Mediation asks how or why. Moderation asks when or for whom."
+    },
+    {
+      title: "Paired t-test vs Repeated Measures ANOVA",
+      summary: "Both use linked observations, but the paired t-test is for two measurements and repeated measures ANOVA handles three or more."
+    },
+    {
+      title: "Chi-square vs Poisson Regression",
+      summary: "Chi-square compares category counts in tables, while Poisson regression models a count outcome from predictors."
     }
   ],
   scenarios: [
@@ -167,6 +271,30 @@ window.siteData = {
       description: "A project type that often mixes scales, categories, and applied research questions.",
       methods: "Chi-square, logistic regression, linear regression",
       question: "I have questionnaire data, but some variables are categories and some are scores."
+    },
+    {
+      title: "Three-Wave Stress Tracking Study",
+      description: "A realistic project where the same students are measured several times across a term.",
+      methods: "Repeated measures ANOVA, descriptive statistics",
+      question: "I measured the same students at the start, middle, and end of the semester. How do I compare the pattern over time?"
+    },
+    {
+      title: "Counting Campus Service Use",
+      description: "A common applied question where the main outcome is the number of visits, appointments, or events.",
+      methods: "Poisson regression, descriptive statistics",
+      question: "Which student characteristics predict the number of counseling visits during the first term?"
+    },
+    {
+      title: "Why Does the Effect Happen?",
+      description: "A mechanism-focused project where a third variable may explain how one variable relates to another.",
+      methods: "Mediation analysis, linear regression",
+      question: "Does belonging explain why social support is linked to lower anxiety?"
+    },
+    {
+      title: "For Whom Does the Effect Change?",
+      description: "An interaction-focused project where the relationship may differ across subgroups or contexts.",
+      methods: "Moderation analysis, linear regression",
+      question: "Is the link between sleep and anxiety stronger for first-year students than for senior students?"
     }
   ],
   paths: [
@@ -189,24 +317,92 @@ window.siteData = {
       title: "Relationship and Prediction Path",
       audience: "Students working with surveys, scale scores, and explanatory questions.",
       modules: "Research questions, correlation vs regression, correlation, regression"
+    },
+    {
+      title: "Measurement and Quality Path",
+      audience: "Students who need help turning broad ideas into defensible variables and measures.",
+      modules: "Research questions, variable types, reliability and validity, assumptions, effect sizes"
+    },
+    {
+      title: "Reporting and Open Science Path",
+      audience: "Students writing a paper, methods section, proposal, or thesis report.",
+      modules: "Annotated outputs, APA reporting guidance, effect sizes, preregistration basics"
     }
   ],
   resources: [
     {
+      slug: "research-question-basics",
       title: "What Is a Research Question?",
       summary: "Learn to distinguish questions about differences, relationships, prediction, and mechanisms."
     },
     {
+      slug: "variable-types",
       title: "How to Identify Variable Types",
       summary: "Recognize the difference between continuous, categorical, binary, and count variables."
     },
     {
+      slug: "research-design-basics",
       title: "Research Design Basics",
       summary: "Understand the difference between independent groups, repeated measures, and cross-sectional designs."
     },
     {
+      slug: "measurement-reliability-validity",
+      title: "Measurement, Reliability, and Validity",
+      summary: "Learn how broad ideas become usable measures, and why a good measure needs both consistency and evidence that it captures the construct you care about.",
+      audience: "Best when your question still uses broad concepts like stress, support, or wellbeing without a clear way to measure them.",
+      url: "https://socialsci.libretexts.org/Bookshelves/Psychology/Research_Methods_and_Statistics/Research_Methods_in_Psychology_%28Jhangiani_Chiang_Cuttler_and_Leighton%29/04%3A_Psychological_Measurement/4.03%3A_Reliability_and_Validity_of_Measurement",
+      sourceLabel: "Open LibreTexts chapter",
+      sourceName: "LibreTexts"
+    },
+    {
+      slug: "statistical-assumptions",
       title: "Common Statistical Assumptions",
       summary: "A plain-language introduction to the checks beginners should know before using a method."
+    },
+    {
+      slug: "effect-sizes-power",
+      title: "Effect Sizes and Power Analysis",
+      summary: "Learn why statistical significance is not enough, how to think about effect size, and why power matters when planning a study.",
+      audience: "Best for students planning sample size, interpreting practical importance, or writing up what their findings mean.",
+      url: "https://stats.libretexts.org/Courses/Adler_University/Graduate-Level_Statistics_in_Psychology/09%3A_Effect_Sizes_and_Power_Analysis",
+      sourceLabel: "Open effect size and power guide",
+      sourceName: "Statistics LibreTexts"
+    },
+    {
+      slug: "apa-reporting-standards",
+      title: "APA Reporting Standards (JARS)",
+      summary: "Use APA reporting guidance to see what quantitative studies should include in a methods or results write-up.",
+      audience: "Best for students drafting papers, theses, or results sections in psychology and social science.",
+      url: "https://www.apa.org/education-career/training/reporting-research-jars.html",
+      sourceLabel: "Open APA reporting guide",
+      sourceName: "American Psychological Association"
+    },
+    {
+      slug: "annotated-output",
+      title: "Annotated Outputs and Worked Examples",
+      summary: "Read real output tables with footnotes and explanations so the jump from method choice to interpretation feels less intimidating.",
+      audience: "Best for students who have a likely method but still do not know what the output means.",
+      url: "https://stats.oarc.ucla.edu/annotatedoutput",
+      sourceLabel: "Browse annotated outputs",
+      sourceName: "UCLA OARC"
+    },
+    {
+      slug: "mediation-moderation-guide",
+      title: "Mediation and Moderation Guide",
+      summary: "An introductory walkthrough for one of the most commonly confused advanced topics in social science methods.",
+      audience: "Best for students who already understand basic regression and want help with third-variable questions.",
+      url: "https://jasp-stats.org/2020/03/12/mediation-and-moderation-analysis-in-jasp/",
+      sourceLabel: "Open guided tutorial",
+      sourceName: "JASP"
+    },
+    {
+      slug: "preregistration-open-science",
+      title: "Preregistration and Open Science Basics",
+      summary: "A beginner-friendly introduction to planning analyses in advance and being transparent about research decisions.",
+      audience: "Best for thesis, honors, capstone, or instructor-reviewed student projects.",
+      url: "https://www.cos.io/prereg/",
+      sourceLabel: "Open preregistration guide",
+      sourceName: "Center for Open Science"
     }
   ],
   clarifier: {
@@ -223,11 +419,13 @@ window.siteData = {
     },
     structureKeywords: {
       "same-participants-twice": ["before and after", "pre post", "pre-post", "over time", "same participants", "same students", "measured twice", "time 1", "time 2"],
+      "same-participants-three-plus": ["three time points", "multiple time points", "repeatedly measured", "measured three times", "across sessions", "across waves"],
       "two-independent-groups": ["between", "compared with", "compared to", "treatment and control", "two groups", "first-year and senior", "men and women"],
       "three-plus-groups": ["three groups", "several groups", "across majors", "across conditions", "different groups"],
       "two-continuous-variables": ["relationship between", "related to", "association between", "correlation between"],
       "predictors-to-outcome": ["predict", "explains", "influence", "effect of"],
       "predictors-to-categorical-outcome": ["likelihood", "odds", "whether students", "yes or no", "binary"],
+      "predictors-to-count-outcome": ["number of", "count of", "how many", "frequency of", "visits", "events"],
       "two-categorical-variables": ["proportion", "category", "categories", "group by", "yes or no across groups"]
     },
     outcomeHints: {
@@ -494,10 +692,12 @@ window.siteData = {
       options: [
         { value: "two-independent-groups", label: "Two separate groups", hint: "Different people in each group." },
         { value: "same-participants-twice", label: "The same participants measured twice", hint: "A pre-post or repeated design." },
+        { value: "same-participants-three-plus", label: "The same participants measured three or more times", hint: "Several linked time points or conditions." },
         { value: "three-plus-groups", label: "Three or more groups", hint: "Several conditions or categories to compare." },
         { value: "two-continuous-variables", label: "Two continuous variables", hint: "You want to study how two scores vary together." },
         { value: "predictors-to-outcome", label: "One or more predictors for a continuous outcome", hint: "A modeling or prediction question." },
         { value: "predictors-to-categorical-outcome", label: "Predictors for a categorical outcome", hint: "The outcome is yes or no or another category." },
+        { value: "predictors-to-count-outcome", label: "Predictors for a count outcome", hint: "The outcome is a number of visits, events, or occurrences." },
         { value: "two-categorical-variables", label: "Two categorical variables", hint: "A contingency table or category count question." },
         { value: "sample-summary", label: "Just summarizing the sample", hint: "Describing scores or counts rather than testing a relationship." },
         { value: "not-sure", label: "Not sure", hint: "The structure is still unclear." }

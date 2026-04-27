@@ -236,11 +236,17 @@ h3 {
 .hero-actions,
 .finder-actions,
 .results-footer,
-.result-links {
+.result-links,
+.card-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
   margin-top: 1.4rem;
+}
+
+.card-actions {
+  margin-top: auto;
+  padding-top: 0.4rem;
 }
 
 .button {
@@ -727,7 +733,8 @@ select {
 
   .hero-actions,
   .finder-actions,
-  .results-footer {
+  .results-footer,
+  .card-actions {
     flex-direction: column;
   }
 
